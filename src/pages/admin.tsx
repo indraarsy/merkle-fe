@@ -1,5 +1,5 @@
 import { Sidebar } from '@/components/Sidebar'
-import React from 'react'
+import React, { useState } from 'react'
 import { ColumnDef } from "@tanstack/react-table"
 import { User } from '@/lib/types'
 import { DataTable } from '@/components/datatable'
@@ -16,6 +16,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -67,19 +79,62 @@ type Props = {}
 
 const admin = (props: Props) => {
   const { data, error, isLoading } = useSWR<User[]>('https://fakestoreapi.com/users', fetcher)
+  const [formData, setFormData] = useState({
+    email: '',
+    name: ''
+  })
+
   return (
     <>
       <div className="grid grid-cols-5">
         <Sidebar className="hidden lg:block" />
         <div className="col-span-4 lg:border-l w-full flex min-h-screen flex-col items-center pt-4">
-          <h1 className="text-left text-xl font-bold ">Users</h1>
-          <Button variant="secondary" className="ml-10 mb-4 self-start">Add User</Button>
+          <h1 className="text-left text-xl font-bold">Users</h1>
+          <div className="flex self-start ml-10 mb-4">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Add user</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogDescription>
+                    Make changes to your profile here. Click save when you're done.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      defaultValue="Pedro Duarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Username
+                    </Label>
+                    <Input
+                      id="username"
+                      defaultValue="@peduarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">Save changes</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
           {!isLoading ? (
             <DataTable columns={columns} data={data!} />
           ) : (
             <DataTable columns={columns} data={[]} />
           )}
-
         </div>
       </div>
     </>
