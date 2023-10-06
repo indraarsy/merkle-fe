@@ -81,7 +81,9 @@ const admin = (props: Props) => {
   const { data, error, isLoading } = useSWR<User[]>('https://fakestoreapi.com/users', fetcher)
   const [formData, setFormData] = useState({
     email: '',
-    name: ''
+    firstname: '',
+    lastname: '',
+    password: ''
   })
 
   return (
@@ -97,30 +99,50 @@ const admin = (props: Props) => {
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogTitle>Add User</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
+                    Add data here. Click save when you're done.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
+                    <Label htmlFor="firstname" className="text-right">
+                      First name
                     </Label>
                     <Input
-                      id="name"
-                      defaultValue="Pedro Duarte"
+                      id="firstname"
                       className="col-span-3"
+                      placeholder="First name"
                     />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                      Username
+                    <Label htmlFor="lastname" className="text-right">
+                      Last name
                     </Label>
                     <Input
-                      id="username"
-                      defaultValue="@peduarte"
+                      id="lastname"
                       className="col-span-3"
+                      placeholder="Last name"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="email" className="text-right">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      className="col-span-3"
+                      type="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="password" className="text-right">Password</Label>
+                    <Input
+                      id="password"
+                      className="col-span-3"
+                      type="password"
+                      placeholder="Password"
                     />
                   </div>
                 </div>

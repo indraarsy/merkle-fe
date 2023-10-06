@@ -18,4 +18,8 @@ yarn dev
 pnpm dev
 ```
 
+## Login 
+Credentials untuk login bisa dipilih dari email dan password dari API tersebut
+https://fakestoreapi.com/users
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
